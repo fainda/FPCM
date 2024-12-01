@@ -1,16 +1,4 @@
 ---@diagnostic disable-next-line: undefined-global
-data:extend({
-    {
-        type="item",
-        name="obama_prism",
-        icon="__test-mod__/graphics/icons/empty-fuel-cell.png",
-        icon_size=64,
-        mipmap_count=4,
-        subgroup="intermediate-product",
-        stack_size=1
-    }
-})
-
 local styles = data.raw["gui-style"].default
 
 styles["test_content_frame"] = {
