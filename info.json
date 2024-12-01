@@ -1,0 +1,9 @@
+{
+    "name": "test-mod",
+    "version": "0.1.0",
+    "title": "Test MOD >:(",
+    "author": "fainda:3",
+    "factorio_version": "2.0",
+    "dependencies": ["base >= 2.0"],
+    "description": "This mod adds in nothing that leaves behind nothing fire as you walk around."
+}

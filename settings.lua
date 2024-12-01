@@ -1,0 +1,10 @@
+data:extend({
+    {
+        type="double-setting",
+        setting_type="startup",
+        name="test_setting",
+        default_value=1,
+        minimum_value=0.1,
+        maximum_value=2.2
+    }
+})
