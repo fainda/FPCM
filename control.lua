@@ -168,39 +168,39 @@ end
 
 --DRAG LOGIC?
 
-local drag_data = {}
+-- local drag_data = {}
 
-script.on_event(defines.events.on_gui_click, function(event)
-    -- Close the window when the close button is clicked
-    if event.element.name == "fpcm_close_window_button" then
-        event.element.closest("frame").destroy()
-    end
-end)
+-- script.on_event(defines.events.on_gui_click, function(event)
+--     -- Close the window when the close button is clicked
+--     if event.element.name == "fpcm_close_window_button" then
+--         event.element.closest("frame").destroy()
+--     end
+-- end)
 
-script.on_event(defines.events.on_gui_dragged, function(event)
-    -- Check if the dragged element is the draggable space
-    if event.element.name == "drag_space" then
-        local frame = event.element.closest("frame")
-        if not frame then return end
+-- script.on_event(defines.events.on_gui_dragged, function(event)
+--     -- Check if the dragged element is the draggable space
+--     if event.element.name == "drag_space" then
+--         local frame = event.element.closest("frame")
+--         if not frame then return end
 
-        -- Update the window position
-        if not drag_data[frame.name] then
-            drag_data[frame.name] = {initial_x = frame.position.x, initial_y = frame.position.y, start_x = event.mouse_position.x, start_y = event.mouse_position.y}
-        end
+--         -- Update the window position
+--         if not drag_data[frame.name] then
+--             drag_data[frame.name] = {initial_x = frame.position.x, initial_y = frame.position.y, start_x = event.mouse_position.x, start_y = event.mouse_position.y}
+--         end
 
-        -- Calculate the new position
-        local delta_x = event.mouse_position.x - drag_data[frame.name].start_x
-        local delta_y = event.mouse_position.y - drag_data[frame.name].start_y
-        frame.position = {x = drag_data[frame.name].initial_x + delta_x, y = drag_data[frame.name].initial_y + delta_y}
-    end
-end)
+--         -- Calculate the new position
+--         local delta_x = event.mouse_position.x - drag_data[frame.name].start_x
+--         local delta_y = event.mouse_position.y - drag_data[frame.name].start_y
+--         frame.position = {x = drag_data[frame.name].initial_x + delta_x, y = drag_data[frame.name].initial_y + delta_y}
+--     end
+-- end)
 
-script.on_event(defines.events.on_gui_mouse_up, function(event)
-    -- Reset the dragging data when the mouse is released
-    if event.element.name == "drag_space" then
-        local frame = event.element.closest("frame")
-        if frame then
-            drag_data[frame.name] = nil
-        end
-    end
-end)
+-- script.on_event(defines.events.on_gui_mouse_up, function(event)
+--     -- Reset the dragging data when the mouse is released
+--     if event.element.name == "drag_space" then
+--         local frame = event.element.closest("frame")
+--         if frame then
+--             drag_data[frame.name] = nil
+--         end
+--     end
+-- end)
