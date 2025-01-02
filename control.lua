@@ -6,15 +6,16 @@ local mod_gui = require("mod-gui")
 
 
 -- define tables
-local function table_handler()
+local function load_handler()
     storage = storage or {}
     storage.FPCM = storage.FPCM or {}
     storage.FPCM.sensors = storage.FPCM.sensors or {}
     storage.FPCM.actors = storage.FPCM.actors or {}
+    add_commands()
 end
-script.on_init(table_handler())
-script.on_configuration_changed(table_handler()) --better safe than sorry
-script.on_load(table_handler())
+script.on_init(load_handler())
+script.on_configuration_changed(load_handler()) --better safe than sorry
+script.on_load(load_handler())
 
 
 -- Create the button when the player joins the game

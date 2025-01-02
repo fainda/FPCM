@@ -14,10 +14,14 @@ function input_combinator:new(combinator_entity)
         name = "Input combinator "..combinator_entity.unit_number, -- this will be displayed in the GUI
         surface = combinator_entity.surface,
         position = combinator_entity.position,
-        output_network = combinator_entity.get_control_behavior().get_circuit_network(1).network_id, --old name: signal_red
-        input_network = combinator_entity.get_control_behavior().get_circuit_network(2).network_id, --old name: signal_green
+        output_network = nil, --old name: signal_red
+        input_network = nil, --old name: signal_green
         machines = {} --create machine array
     }
+    if combinator_entity.get_control_behavior() ~=nil then
+        obj.output_network=combinator_entity.get_control_behavior().get_circuit_network(1).network_id
+        obj.input_network=combinator_entity.get_control_behavior().get_circuit_network(2).network_id
+    end
     setmetatable(obj, self)
     self.__index = self
     return obj
@@ -94,7 +98,7 @@ end
 script.on_nth_tick(60, function(event) handler(event) end)
 --call everything inside every event
 function handler(event)
-    update_combinators()
+    try_and_catch(update_combinators, "update combinators")
 end
 
 function update_combinators()
@@ -104,14 +108,14 @@ function update_combinators()
             if entity.get_control_behavior() then
                 if root_path["sensors"][entity.unit_number] ~= nil --PATH DEFINITION
                 then
-                    root_path["sensors"][entity.unit_number]:verify_self()
-                    root_path["sensors"][entity.unit_number]:update_networks()
+                    try_and_catch(root_path["sensors"][entity.unit_number]:verify_self(), "verify sensors")
+                    try_and_catch(root_path["sensors"][entity.unit_number]:update_networks(), "update sensor networks")
                 else
-                    root_path["sensors"][entity.unit_number]=input_combinator:new(entity)
+                    root_path["sensors"][entity.unit_number]= try_and_catch(input_combinator:new(entity))
                 end
             end
         end
-        
+        --[[
         for _, entity in pairs(surface.find_entities_filtered { name = "output-combinator" }) do
             if entity.get_control_behavior() then
                 if root_path["actors"][entity.unit_number] ~= nil --PATH DEFINITION
@@ -123,6 +127,7 @@ function update_combinators()
                 end
             end
         end
+        ]]--
         --surface loop ends here
     end
 end
