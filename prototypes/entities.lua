@@ -1,37 +1,15 @@
-local entity_1 = table.deepcopy(data.raw["constant-combinator"]["constant-combinator"])
+local input_combinator = table.deepcopy(data.raw["constant-combinator"]["constant-combinator"])
 
-entity_1.name = "input-combinator"
-entity_1.flags = {"placeable-neutral", "player-creation", "get-by-unit-number"}
-entity_1.input_connection_points = {
-    {
-        shadow =
-        {
-            red = { 0.328125, 0.703125 },
-            green = { 0.859375, 0.703125 }
-        },
-        wire =
-        {
-            red = { -0.28125, 0.34375 },
-            green = { 0.25, 0.34375 }
-        }
-    }
-}
 
-local entity_2 = table.deepcopy(data.raw["constant-combinator"]["constant-combinator"])
-entity_2.name = "test2-combinator"
-entity_2.input_connection_points = {
-    {
-        shadow =
-        {
-            red = { 0.328125, 0.703125 },
-            green = { 0.859375, 0.703125 }
-        },
-        wire =
-        {
-            red = { -0.28125, 0.34375 },
-            green = { 0.25, 0.34375 }
-        }
-    }
-}
+--input combinator
+input_combinator.name = "input-combinator"
+input_combinator.flags = {"placeable-neutral", "player-creation", "get-by-unit-number"}
 
-data:extend{entity_1, entity_2}
+
+--output combinator
+local output_combinator = table.deepcopy(data.raw["constant-combinator"]["constant-combinator"])
+output_combinator.name = "output-combinator"
+output_combinator.flags = {"placeable-neutral", "player-creation", "get-by-unit-number"}
+
+
+data:extend{input_combinator, output_combinator}

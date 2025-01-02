@@ -1,7 +1,6 @@
 ---@diagnostic disable: param-type-mismatch
 --get global vars
 local global_vars=require("global.vars")
-local mod_name =  global_vars["mod_name"]
 local root_path = global_vars["root_path"]
 
 
@@ -49,6 +48,45 @@ end
 
 
 --########## OUTPUT COMBINATOR START ##########
+--init input combinator object
+local output_combinator = {}
+--constructor method
+function output_combinator:new(combinator_entity)
+    local obj = {
+        unit_number = combinator_entity.unit_number,
+        name = "output combinator "..combinator_entity.unit_number, -- this will be displayed in the GUI
+        surface = combinator_entity.surface,
+        position = combinator_entity.position,
+        output_network = combinator_entity.get_control_behavior().get_circuit_network(1).network_id, --old name: signal_red
+        input_network = combinator_entity.get_control_behavior().get_circuit_network(2).network_id, --old name: signal_green
+        machines = {} --create machine array
+    }
+    setmetatable(obj, self)
+    self.__index = self
+    return obj
+end
+function output_combinator:get_machines()
+    -- SCAN LOGIC HERE
+end
+function output_combinator:drop_machines()
+    self.machines={}
+end
+function output_combinator:update_name(name)
+    self.name=name
+end
+function output_combinator:update_networks()
+    self.output_network = game.get_entity_by_unit_number(self.unit_number).get_control_behavior().get_circuit_network(1) --old name: signal_red
+    self.input_network = game.get_entity_by_unit_number(self.unit_number).get_control_behavior().get_circuit_network(2) --old name: signal_green
+end
+--this following function may not be necessary, as unit numbers are not reused and these properties are therefore static
+function output_combinator:verify_self()
+    if
+    self.surface == game.get_entity_by_unit_number(self.unit_number).surface
+    and self.position == game.get_entity_by_unit_number(self.unit_number).position
+    then return true
+    else return false
+    end
+end
 --########## OUTPUT COMBINATOR END ##########
 
 
@@ -73,7 +111,7 @@ function update_combinators()
                 end
             end
         end
-        --[[
+        
         for _, entity in pairs(surface.find_entities_filtered { name = "output-combinator" }) do
             if entity.get_control_behavior() then
                 if root_path["actors"][entity.unit_number] ~= nil --PATH DEFINITION
@@ -84,7 +122,7 @@ function update_combinators()
                     root_path["actors"][entity.unit_number]=output_combinator:new(entity)
                 end
             end
-        en]]--
+        end
         --surface loop ends here
     end
 end
