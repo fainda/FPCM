@@ -64,7 +64,7 @@ function update_combinators()
         --surface loop starts here
         for _, entity in pairs(surface.find_entities_filtered { name = "input-combinator" }) do
             if entity.get_control_behavior() then
-                if root_path["sensors"][entity.unit_number] == nil --PATH DEFINITION
+                if root_path["sensors"][entity.unit_number] ~= nil --PATH DEFINITION
                 then
                     root_path["sensors"][entity.unit_number]:verify_self()
                     root_path["sensors"][entity.unit_number]:update_networks()
@@ -76,7 +76,7 @@ function update_combinators()
         --[[
         for _, entity in pairs(surface.find_entities_filtered { name = "output-combinator" }) do
             if entity.get_control_behavior() then
-                if root_path["actors"][entity.unit_number] --PATH DEFINITION
+                if root_path["actors"][entity.unit_number] ~= nil --PATH DEFINITION
                 then
                     root_path["actors"][entity.unit_number]:verify_self()
                     root_path["actors"][entity.unit_number]:update_networks()

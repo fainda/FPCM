@@ -4,10 +4,12 @@ if script.active_mods["gvv"] then require("__gvv__.gvv")() end
 
 local mod_gui = require("mod-gui")
 
-
+-- define tables
 script.on_init(function()
     storage = storage or {}
     storage.FPCM = storage.FPCM or {}
+    storage.FPCM.sensors = storage.FPCM.sensors or {}
+    storage.FPCM.actors = storage.FPCM.actors or {}
 end)
 
 -- Create the button when the player joins the game
