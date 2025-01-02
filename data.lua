@@ -32,3 +32,4 @@ styles["test_deep_frame"] = {
 
 ------------------------------------------------------------------------------------------------------------------------
 require("prototypes.entities")
+require("prototypes.changes")

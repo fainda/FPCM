@@ -1,6 +1,7 @@
 local entity_1 = table.deepcopy(data.raw["constant-combinator"]["constant-combinator"])
 
-entity_1.name = "test1-combinator"
+entity_1.name = "input-combinator"
+entity_1.flags = {"placeable-neutral", "player-creation", "get-by-unit-number"}
 entity_1.input_connection_points = {
     {
         shadow =

@@ -8,7 +8,7 @@ properties.general = {
     "force",
 }
 
-properties.assembling = {
+properties["assembling-machine"] = {
     "crafting_progress",
     "energy",
     "energy_usage",
@@ -23,19 +23,16 @@ properties.assembling = {
     "health"
 }
 
-properties.reactor = {
+properties["reactor"] = {
     "energy",
-    "energy_buffer",
     "temperature",
-    "heat_buffer",
     "active",
     "status",
     "burner",
-    "neighbours",
     "health"
 }
 
-properties.pump = {
+properties["pump"] = {
     "fluidbox.fluidbox[1]", --input
     "fluidbox.fluidbox[2]", --output
     "fluid_usage_per_tick",
@@ -48,3 +45,4 @@ properties.pump = {
     "health"
 }
 
+return properties
