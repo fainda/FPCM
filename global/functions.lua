@@ -1,0 +1,3 @@
+function getEntityFromCombinatorObject(object)
+    
+end
