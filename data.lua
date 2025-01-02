@@ -33,3 +33,6 @@ styles["test_deep_frame"] = {
 ------------------------------------------------------------------------------------------------------------------------
 require("prototypes.entities")
 require("prototypes.changes")
+
+require("prototypes.items.input_combinator")
+require("prototypes.items.output_combinator")
