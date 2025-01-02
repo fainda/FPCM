@@ -1,0 +1,43 @@
+{
+    "storage": {
+        "FPCM": {
+            "unit_number": { // This is the number we need to access the entity
+                "red": {
+                    "signals": {
+                        "wood": 50
+                    } // Signals we dont really need
+                },
+                "green": {
+                    "signals": {
+                        "coal": 10
+                    } // Signals we dont really need
+                },
+                "position": {
+                    "x": 0,
+                    "y": 0
+                }, // Position of the entity so you can find it with surface.find_entity("UNIT_NUMBER, POSITION)
+                "surface": "nauvis",
+                "MachinesRED": {
+                    "reactor": {
+                        "name": "reactor",
+                        "state": "off",
+                        "position": {
+                            "x": 0,
+                            "y": 0
+                        }
+                    } // More machines can be added here
+                },
+                "MachinesGREEN": {
+                    "reactor": {
+                        "name": "reactor",
+                        "state": "off",
+                        "position": {
+                            "x": 0,
+                            "y": 0
+                        }
+                    } // More machines can be added here
+                }
+            }
+        }
+    }
+}

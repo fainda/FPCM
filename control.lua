@@ -1,3 +1,6 @@
+require("scripts.combinator")
+require("scripts.commands")
+
 local mod_gui = require("mod-gui")
 
 -- Create the button when the player joins the game
