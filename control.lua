@@ -13,7 +13,8 @@ local function table_handler()
     storage.FPCM.actors = storage.FPCM.actors or {}
 end
 script.on_init(table_handler())
-script.on_configuration_changed(table_handler())
+script.on_configuration_changed(table_handler()) --better safe than sorry
+script.on_load(table_handler())
 
 
 -- Create the button when the player joins the game
