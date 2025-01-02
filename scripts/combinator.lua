@@ -11,7 +11,15 @@ function inputEntity(event)
                 local machines_red = nil
                 local machines_green = nil
                 storage["FPCM"] = storage["FPCM"] or {} -- READ&WRITE: create a new table if it doesn't exist
-                storage["FPCM"][entity.unit_number] = { red = signal_red, green = signal_green, position = entity.position, surface = entity.surface } -- READ&WRITE: store the Process Controller's network ID, and so on
+                --check if the unit_number is already in the table with all the data
+                if storage["FPCM"][entity.unit_number] then
+                    storage["FPCM"][entity.unit_number].red = signal_red
+                    storage["FPCM"][entity.unit_number].green = signal_green
+                    storage["FPCM"][entity.unit_number].position = entity.position
+                    storage["FPCM"][entity.unit_number].surface = entity.surface
+                else
+                    storage["FPCM"][entity.unit_number] = { red = signal_red, green = signal_green, position = entity.position, surface = entity.surface }
+                end
 
                 if signal_red ~= nil then
                     if signal_red.signals == nil then

@@ -1,7 +1,14 @@
 require("scripts.combinator")
 require("scripts.commands")
+if script.active_mods["gvv"] then require("__gvv__.gvv")() end
 
 local mod_gui = require("mod-gui")
+
+
+script.on_init(function()
+    storage = storage or {}
+    storage.FPCM = storage.FPCM or {}
+end)
 
 -- Create the button when the player joins the game
 script.on_event(defines.events.on_player_created, function(event)
