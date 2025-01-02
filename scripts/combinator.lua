@@ -1,63 +1,89 @@
-script.on_nth_tick(60, function(event)
-    inputEntity(event)
-end)
+--get global vars
+local global_vars=require("global.vars")
+local mod_name =  global_vars["mod_name"]
+local root_path = global_vars["root_path"]
 
-function inputEntity(event)
+
+--########## INPUT COMBINATOR START ##########
+--init input combinator object
+local input_combinator = {}
+--constructor method
+function input_combinator:new(combinator_entity)
+    local obj = {
+        unit_number = combinator_entity.unit_number,
+        name = "Input combinator "..combinator_entity.unit_number, -- this will be displayed in the GUI
+        surface = combinator_entity.surface,
+        position = combinator_entity.position,
+        output_network = combinator_entity.get_control_behavior().get_circuit_network(1).network_id, --old name: signal_red
+        input_network = combinator_entity.get_control_behavior().get_circuit_network(2).network_id, --old name: signal_green
+        machines = {} --create machine array
+    }
+    setmetatable(obj, self)
+    self.__index = self
+    return obj
+end
+function input_combinator:get_machines()
+    -- SCAN LOGIC HERE
+end
+function input_combinator:drop_machines()
+    self.machines={}
+end
+function input_combinator:update_name(name)
+    self.name=name
+end
+function input_combinator:update_networks()
+    self.output_network = game.get_entity_by_unit_number(self.unit_number).get_control_behavior().get_circuit_network(1) --old name: signal_red
+    self.input_network = game.get_entity_by_unit_number(self.unit_number).get_control_behavior().get_circuit_network(2) --old name: signal_green
+end
+--this following function may not be necessary, as unit numbers are not reused and these properties are therefore static
+function input_combinator:verify_self()
+    if
+    self.surface == game.get_entity_by_unit_number(self.unit_number).surface
+    and self.position == game.get_entity_by_unit_number(self.unit_number).position
+    then return true
+    else return false
+    end
+end
+--########## INPUT COMBINATOR END ##########
+
+
+--########## OUTPUT COMBINATOR START ##########
+--########## OUTPUT COMBINATOR END ##########
+
+
+--create an event every second
+script.on_nth_tick(60, function(event) handler(event) end)
+--call everything inside every event
+function handler(event)
+    update_combinators()
+end
+
+function update_combinators()
     for _, surface in pairs(game.surfaces) do
-        for _, entity in pairs(surface.find_entities_filtered { name = "test1-combinator" }) do
+        --surface loop starts here
+        for _, entity in pairs(surface.find_entities_filtered { name = "input-combinator" }) do
             if entity.get_control_behavior() then
-                local signal_red = entity.get_control_behavior().get_circuit_network(1)
-                local signal_green = entity.get_control_behavior().get_circuit_network(2)
-                local machines_red = nil
-                local machines_green = nil
-                storage["FPCM"] = storage["FPCM"] or {} -- READ&WRITE: create a new table if it doesn't exist
-                --check if the unit_number is already in the table with all the data
-                if storage["FPCM"][entity.unit_number] then
-                    storage["FPCM"][entity.unit_number].red = signal_red
-                    storage["FPCM"][entity.unit_number].green = signal_green
-                    storage["FPCM"][entity.unit_number].position = entity.position
-                    storage["FPCM"][entity.unit_number].surface = entity.surface
+                if root_path["sensors"][entity.unit_number] --PATH DEFINITION
+                then
+                    root_path["sensors"][entity.unit_number]:verify_self()
+                    root_path["sensors"][entity.unit_number]:update_networks()
                 else
-                    storage["FPCM"][entity.unit_number] = { red = signal_red, green = signal_green, position = entity.position, surface = entity.surface }
-                end
-
-                if signal_red ~= nil then
-                    if signal_red.signals == nil then
-                        -- game.print("Signal red is nil")
-                    else
-                        for _, signal in pairs(signal_red.signals) do
-                            -- game.print("[font=default-bold][color=red]x".. signal.count .. "[/color][/font] [item=".. signal.signal.name .. "]")
-                        end
-                    end
-                end
-                if signal_green ~= nil then
-                    if signal_green.signals == nil then
-                        -- game.print("Signal green is nil")
-                    else
-                        for _, signal in pairs(signal_green.signals) do
-                            -- game.print("[font=default-bold][color=green]x".. signal.count .. "[/color][/font] [item=".. signal.signal.name .. "]")
-                        end
-                    end
-                end
-
-                if machines_red ~= nil then
-                    -- game.print("Connected machines (red):")
-                    for _, machine in pairs(machines_red) do
-                        -- game.print(machine.name .. " at position " .. serpent.line(machine.position))
-                    end
-                else
-                    -- game.print("No machines connected with red wire.")
-                end
-
-                if machines_green ~= nil then
-                    -- game.print("Connected machines (green):")
-                    for _, machine in pairs(machines_green) do
-                        -- game.print(machine.name .. " at position " .. serpent.line(machine.position))
-                    end
-                else
-                    -- game.print("No machines connected with green wire.")
+                    root_path["sensors"][entity.unit_number]=input_combinator:new(entity)
                 end
             end
         end
+        --[[
+        for _, entity in pairs(surface.find_entities_filtered { name = "output-combinator" }) do
+            if entity.get_control_behavior() then
+                if root_path["actors"][entity.unit_number] --PATH DEFINITION
+                then
+                    root_path["actors"][entity.unit_number]:verify_self()
+                    root_path["actors"][entity.unit_number]:update_networks()
+                else
+                    root_path["actors"][entity.unit_number]=output_combinator:new(entity)
+                end
+            end
+        en]]--
+        --surface loop ends here
     end
 end
