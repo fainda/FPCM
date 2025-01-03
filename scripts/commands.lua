@@ -101,13 +101,13 @@ function add_commands()
         
         local linker=gf:get_root_path()["linker"][entity_number]
 
-        local input_network = linker.network.input
+        local input_network = linker.networks.input
         local output_network = linker.networks.output
 
         local sensor_machines = {}
         local actor_machines = {}
 
-        local surface = linker.surface
+        local surface = game.get_surface(linker.surface)
         local force = linker.force
 
         --Scan surface for machines
