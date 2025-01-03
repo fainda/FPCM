@@ -14,7 +14,8 @@ function linking_combinator:new(combinator_entity)
         surface = combinator_entity.surface.name,
         position = combinator_entity.position,
         networks = {input=nil, output=nil},
-        machines = {} --create machine array
+        machines = {}, --create machine array
+        force = combinator_entity.force
     }
     setmetatable(obj, self)
     self.__index = self
