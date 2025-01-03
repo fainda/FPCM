@@ -14,7 +14,7 @@ function update_combinators()
             if entity.get_control_behavior() then
                 if gf:get_root_path()["linker"][entity.unit_number]
                 then --update logic
-                    gf:get_root_path()["linker"][entity.unit_number]:verify_self()
+                    if not gf:get_root_path()["linker"][entity.unit_number]:verify_self() then gf:get_root_path()["linker"][entity.unit_number]:deconstruct() end
                     gf:get_root_path()["linker"][entity.unit_number]:update_networks()
                 else --create logic
                     gf:get_root_path()["linker"][entity.unit_number] = {}

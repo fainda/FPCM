@@ -2,6 +2,13 @@ local globals = {}
 
 
 
+local vars = {}
+vars.mod_name = "FPCM"
+vars.debug_mode = true
+vars.verbose = true
+
+
+
 
 local functions = {}
 function functions:print_to_console(msg) --mhm
@@ -19,10 +26,10 @@ function functions:try_and_catch(func, func_name) --best and worst thing yet
     
     if success
     then
-        functions:print_to_console(func_name.." ran successfully")
+        self:conditional_broadcast(vars.debug_mode and vars.verbose, func_name.." ran successfully")
         return err --err is the value returned by func, if it ran successfully
     else
-        functions:print_to_console(func_name.." failed to run: "..err)
+        self:conditional_broadcast(vars.debug_mode, func_name.." failed to run: "..err)
         return false
     end
 end
@@ -106,13 +113,6 @@ function functions.tables:intersection(t1, t2)
     end
     return self:remove_duplicates(result)
 end
-
-
-
-local vars = {}
-vars.mod_name = "FPCM"
-vars.debug_mode = true
-vars.verbose = true
 
 
 

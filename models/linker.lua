@@ -2,6 +2,7 @@ local gv=require("global").vars --global vars
 local gf=require("global").functions --global properties
 local compatible_entities = require("global").compatible_entities
 local machine_object=require("models.machine")
+local network_object=require("models.network")
 
 --init combinator object
 local linking_combinator = {}
@@ -19,6 +20,10 @@ function linking_combinator:new(combinator_entity)
     setmetatable(obj, self)
     self.__index = self
     return obj
+end
+function linking_combinator:deconstruct()
+    gf:get_root_path()["linker"][self.unit_number] = nil
+    gf:conditional_broadcast(gv.debug_mode and gv.verbose, "deconstructed linker")
 end
 function linking_combinator:find_machines()
     for _, machine in pairs(game.get_surface(self.surface).find_entities_filtered({force = self.force})) do
