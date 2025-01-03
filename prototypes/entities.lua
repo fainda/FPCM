@@ -15,7 +15,10 @@ linking_combinator.sprites.west.layers[1].tint = { r = 0, g = 1, b = 0, a = 1 } 
 local logic_controller = table.deepcopy(data.raw["constant-combinator"]["constant-combinator"])
 logic_controller.name = "logic-controller"
 logic_controller.flags = {"placeable-neutral", "player-creation", "get-by-unit-number"}
---logic_controller.minable.result = "logic-controller"
+logic_controller.minable.result = "logic-controller"
+logic_controller.icon = "__FPCM__/graphics/icons/items/logic_controller.png"
+logic_controller.icon_size = 128
+logic_controller.icon_mipmaps = 4
 --coloring of the entity
 logic_controller.sprites.north.layers[1].tint = { r = 1, g = 1, b = 0, a = 1 } -- yellow
 logic_controller.sprites.east.layers[1].tint = { r = 1, g = 1, b = 0, a = 1 } -- yellow

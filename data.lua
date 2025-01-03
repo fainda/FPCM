@@ -1,6 +1,7 @@
 require("prototypes.entities")
 require("prototypes.changes")
 require("prototypes.items.linking_combinator")
+require("prototypes.items.logic_controller")
 
 
 --[[local styles = data.raw["gui-style"].default
