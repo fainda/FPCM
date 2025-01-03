@@ -1,5 +1,21 @@
 local gv=require("global").vars --global vars
 local gf=require("global").functions --global properties
+local compatible_entities = require("global").compatible_entities
+
+local machine_object={}
+function machine_object:new(machine_entity)
+    obj={
+        type = machine_entity.type,
+        name = machine_entity.name,
+        unit_number = machine_entity.unit_number,
+        position = machine_entity.position,
+        status = machine_entity.status,
+        signals={}--SIGNALS GO HERE
+    }
+    setmetatable(obj, self)
+    self.__index = self
+    return obj
+end
 
 function add_commands()
 
@@ -116,30 +132,18 @@ function add_commands()
                 if
                 machine.get_control_behavior().get_circuit_network(1)
                 and machine.get_control_behavior().get_circuit_network(1).network_id == output_network
+                and gf:array_contains_value(compatible_entities.actors, machine.type)
                 then
                     -- run when machine is in the same network (red) as linker
-                    sensor_machines[machine.unit_number]={ --MAKE THIS A MACHINE OBJECT
-                        type = machine.type,
-                        name = machine.name,
-                        unit_number = machine.unit_number,
-                        position = machine.position,
-                        status = machine.status,
-                        signals={}--SIGNALS GO HERE
-                    }
+                    sensor_machines[machine.unit_number]=machine_object:new(machine)
                 end
                 if
                 machine.get_control_behavior().get_circuit_network(2)
                 and machine.get_control_behavior().get_circuit_network(2).network_id == input_network
+                and gf:array_contains_value(compatible_entities.actors, machine.type)
                 then
-                    -- run when machine is in the same network (green) as linker
-                    sensor_machines[machine.unit_number]={
-                        type = machine.type,
-                        name = machine.name,
-                        unit_number = machine.unit_number,
-                        position = machine.position,
-                        status = machine.status,
-                        signals={}--SIGNALS GO HERE
-                    }
+                    -- run when machine is in the same network (red) as linker
+                    sensor_machines[machine.unit_number]=machine_object:new(machine)
                 end
             end
         end

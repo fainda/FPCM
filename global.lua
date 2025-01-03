@@ -26,6 +26,13 @@ function functions:try_and_catch(func, func_name)
     end
 end
 function functions:get_root_path() return storage.FPCM end
+function functions:array_contains_value(array, target_value)
+    for _, value in ipairs(array)
+    do
+        if value==target_value then return true end
+    end
+    return false
+end
 
 
 
