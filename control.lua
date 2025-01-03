@@ -1,5 +1,6 @@
 require("scripts.update")
 require("scripts.commands")
+local load_handler=require("controllers.load_handler"):new()
 
 local gv=require("global").vars --global vars
 local gf=require("global").functions --global properties
@@ -8,21 +9,10 @@ if gv.debug_mode and script.active_mods["gvv"] then require("__gvv__.gvv")() end
 
 
 
--- define tables
-local function load_handler()
-    storage = storage or {}
-    storage.FPCM = storage.FPCM or {}
-    storage.FPCM.linker = storage.FPCM.linker or {}
-    gf:print_to_debug("load handler called")
-end
-
 --call handlers on certain events
-script.on_init(function ()
-    add_commands()
-    load_handler()
-end)
-script.on_configuration_changed(load_handler()) --better safe than sorry
-script.on_load(load_handler())
+script.on_init(load_handler:execute_once())
+script.on_configuration_changed(load_handler:execute_once()) --better safe than sorry
+script.on_load(load_handler:execute_once())
 
 
 --[[
