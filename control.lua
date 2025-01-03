@@ -11,8 +11,7 @@ local mod_gui = require("mod-gui")
 local function load_handler()
     storage = storage or {}
     storage.FPCM = storage.FPCM or {}
-    storage.FPCM.sensors = storage.FPCM.sensors or {}
-    storage.FPCM.actors = storage.actors or {}
+    storage.FPCM.linker = storage.FPCM.linker or {}
     gf:print_to_debug("load handler called")
 end
 script.on_init(function ()
