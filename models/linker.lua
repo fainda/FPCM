@@ -29,6 +29,7 @@ function linking_combinator:find_machines()
             and gf:array_contains_value(compatible_entities.actors, machine.type)
             then
                 -- run when machine is in the same network (red) as self
+                self.machines.actor = self.machines.actor or {}
                 self.machines.actor[machine.unit_number]=machine_object:new(machine)
             end
             if
@@ -37,6 +38,7 @@ function linking_combinator:find_machines()
             and gf:array_contains_value(compatible_entities.sensors, machine.type)
             then
                 -- run when machine is in the same network (red) as self
+                self.machines.sensor = self.machines.actor or {}
                 self.machines.sensor[machine.unit_number]=machine_object:new(machine)
             end
         end
