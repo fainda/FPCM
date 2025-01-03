@@ -96,8 +96,46 @@ function add_commands()
             return
         end
 
-        --TODO: Rewrite of the scan command
+        -- Ensure FPCM and the entity_number table are initialized
+        gf:get_root_path()["linker"] = gf:get_root_ors()["sensors"] or {}
+        gf:get_root_path()["linker"][entity_number].machines = gf:get_root_path()["linker"][entity_numberchines or {}
 
+        local input_network = gf:get_root_path()["linker"][entity_number].netwot
+        local output_network = gf:get_root_path()["linker"][entity_number].networks.output
+
+        local sensor_machines = {}
+        local actor_machines = {}
+
+        local surface = gf:get_root_path()["linker"][entity_number].surface
+        local force = gf:get_root_path()["linker"][entity_number].force
+
+        --Scan surface for machines
+        for _, machine in pairs(surface.find_entities_filtered({force = force})) do
+            if machine.valid and machine.get_control_behavior() then
+                if machine.get_control_behavior().get_circuit_network(1) and
+                    machine.get_control_behavior().get_circuit_network(1).network_id == output_network then
+                    table.insert(sensor_machines, {
+                        type = machine.type,
+                        name = machine.name,
+                        unit_number = machine.unit_number,
+                        position = machine.position,
+                        status = machine.status
+                    })
+                end
+                if machine.get_control_behavior().get_circuit_network(2) and
+                    machine.get_control_behavior().get_circuit_network(2).network_id == input_network then
+                    table.insert(actor_machines, {
+                        type = machine.type,
+                        name = machine.name,
+                        unit_number = machine.unit_number,
+                        position = machine.position,
+                        status = machine.status
+                    })
+                end
+            end
+        end
+        gf:get_root_path()["linker"][entity_number].machines.sensor = sensor_machines
+        gf:get_root_path()["linker"][entity_number].machines.actor = actor_machines
     end)
 
     commands.add_command("fpcm_clear", "Clears the storage",
