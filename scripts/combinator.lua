@@ -55,7 +55,7 @@ end
 script.on_nth_tick(240, function(event) handler(event) end)
 --call everything inside every event
 function handler(event)
-     gf:try_and_catch(update_combinators, "update combinators")
+    gf:try_and_catch(update_combinators, "update combinators")
 end
 
 function update_combinators()
