@@ -33,6 +33,15 @@ function add_commands()
             --woahh
         end)
 
+    commands.add_command("fpcm_call_function", "call a specified function or method (has to be in scope of commands.lua)",
+        function(event)
+            local func = event.parameter
+            if func then
+                if pcall(func) then gf:conditional_broadcast(gv.debug_mode, "function "..func.." called successfully")
+                else gf:conditional_broadcast(gv.debug_mode, "function "..func.." failed to run") end
+            end
+        end)
+
     commands.add_command("fpcm_storage", "Prints the storage",
         function(event)
             local player = game.get_player(event.player_index)

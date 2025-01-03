@@ -49,6 +49,19 @@ function functions:conditional_broadcast(cond, msg) --print to game and debug if
         self:print_to_debug(msg)
     end
 end
+function functions:find_entities_by_type(name)
+    local entities = {}
+    for _, surface in pairs(game.surfaces) do
+        for _, entity in pairs(surface.find_entities_filtered { name = name }) do
+            if entity.get_control_behavior() then
+                table.insert(entities, entity)
+            end
+        end
+    end
+    return entities
+end
+
+
 
 
 --some methods for operating with tables !!

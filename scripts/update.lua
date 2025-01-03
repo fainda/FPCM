@@ -28,7 +28,6 @@ end
 
 
 
-
 --create an event every second (4s for debugging)
 local frequency = gv.debug_mode and 240 or 60
 script.on_nth_tick(frequency, function(event) handler(event) end)
