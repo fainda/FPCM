@@ -3,10 +3,11 @@ local gf=require("global").functions --global properties
 local compatible_entities = require("global").compatible_entities
 
 local machine={}
+local status
 function machine:new(machine_entity)
     for name, numb in pairs(defines.entity_status) do
         if numb == machine_entity.status then
-            local status = name
+            status = name
             break
         end
     end
