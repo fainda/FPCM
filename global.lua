@@ -115,6 +115,15 @@ function functions:highlight_entity(entity, color, text) -- entity = LuaEntity, 
     end
 end
 
+function functions:status_int_to_string(status_number)
+    for name, numb in pairs(defines.entity_status) do
+        if numb == status_number then
+            return name
+        end
+    end
+    return "custom_status"
+end
+
 --some methods for operating with tables !!
 functions.tables = {}
 function functions.tables:find(f, l) -- find element v of l satisfying f(v)
