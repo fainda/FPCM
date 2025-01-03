@@ -19,6 +19,7 @@ function load_handler:execute()
     storage.FPCM.linker = storage.FPCM.linker or {}
     gf:conditional_broadcast(gv.debug_mode and gv.verbose, "load handler called")
     add_commands()
+    self.has_executed=true
 end
 
 function load_handler:execute_once()

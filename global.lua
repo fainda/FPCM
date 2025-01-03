@@ -5,7 +5,7 @@ local globals = {}
 
 local functions = {}
 function functions:print_to_console(msg) --mhm
-    game.print(msg)
+    if game then game.print(msg) end
 end
 function functions:print_to_debug(msg) --ya
     log(msg)
