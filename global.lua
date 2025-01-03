@@ -44,13 +44,9 @@ function functions:conditional_broadcast(cond, msg) --print to game and debug if
 end
 
 
---somne methods for operating with tables
-function table.set(t) -- set of list
-    local u = { }
-    for _, v in ipairs(t) do u[v] = true end
-    return u
-end
-function table.find(f, l) -- find element v of l satisfying f(v)
+--some methods for operating with tables !!
+functions.tables={}
+function functions.tables:find(f, l) -- find element v of l satisfying f(v)
     for _, v in ipairs(l) do
         if f(v) then
         return v
@@ -58,8 +54,7 @@ function table.find(f, l) -- find element v of l satisfying f(v)
     end
     return nil
 end
-functions.tables={}
-function table.remove_duplicates(t)
+function functions.tables:remove_duplicates(t)
     local seen = {}
     local result = {}
     for _, value in ipairs(t) do
@@ -70,7 +65,7 @@ function table.remove_duplicates(t)
     end
     return result
 end
-function table.union(t1, t2)
+function functions.tables:union(t1, t2)
     local result = {}
     for _, v in ipairs(t1) do
         table.insert(result, v)
@@ -78,9 +73,9 @@ function table.union(t1, t2)
     for _, v in ipairs(t2) do
         table.insert(result, v)
     end
-    return table.remove_duplicates(result)
+    return self:remove_duplicates(result)
 end
-function table.difference(t1, t2)
+function functions.tables:difference(t1, t2)
     local result = {}
     local in_t2 = {}
     for _, v in ipairs(t2) do
@@ -92,13 +87,13 @@ function table.difference(t1, t2)
         end
     end
     for _, v in ipairs(t2) do
-        if not in_t2[v] and not table.find(t1, v) then
+        if not in_t2[v] and not self:find(t1, v) then
             table.insert(result, v)
         end
     end
-    return table.remove_duplicates(result)
+    return self:remove_duplicates(result)
 end
-function table.intersection(t1, t2)
+function functions.tables:intersection(t1, t2)
     local result = {}
     local in_t2 = {}
     for _, v in ipairs(t2) do
@@ -109,7 +104,7 @@ function table.intersection(t1, t2)
             table.insert(result, v)
         end
     end
-    return table.remove_duplicates(result)
+    return self:remove_duplicates(result)
 end
 
 
