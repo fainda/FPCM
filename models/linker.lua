@@ -67,9 +67,22 @@ end
 --this following function may not be necessary, as unit numbers are not reused and these properties are therefore static
 function linking_combinator:verify_self()
     local entity = game.get_entity_by_unit_number(self.unit_number)
-    if entity and self.surface == entity.surface.name and self.position == entity.position then
+    local entity_surface, entity_position, own_surface, own_position
+    if entity then
+        entity_surface=entity.surface.name
+        entity_position=entity.position
+        own_surface=self.surface
+        own_position=self.position
+    else
+        gf:conditional_broadcast(gv.debug_mode and gv.verbose, "entity does not exist")
+        return false
+    end
+
+    if entity_surface == own_surface and entity_position == own_position then
+        gf:conditional_broadcast(gv.debug_mode and gv.verbose, "linker verified")
         return true
     else
+        gf:conditional_broadcast(gv.debug_mode and gv.verbose, "linker invalid")
         return false
     end
 end
