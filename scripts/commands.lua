@@ -1,3 +1,6 @@
+local gv=require("global").vars --global vars
+local gf=require("global").functions --global properties
+
 function add_commands()
 
     commands.add_command("fpcm_scan", "Scans all machines on the same circuit network as a given entity_number", function(event)
@@ -10,7 +13,7 @@ function add_commands()
             return
         end
     
-        -- Ensure storage.FPCM and the entity_number table are initialized  ?????????????
+        -- Efpcm_nsure storage.FPCM and the entity_number table are initialized  ?????????????
         storage.FPCM = storage.FPCM or {}
         storage.FPCM[entity_number] = storage.FPCM[entity_number] or {
             machinesRED = {},
@@ -86,14 +89,25 @@ function add_commands()
         log(serpent.block(storage.FPCM))
     end)
 
-    -- commands.add_command("fpcm_clear", "Clears the storage",
-    --     function(event)
-    --         local player = game.get_player(event.player_index)
-    --         if not player then return end
+    commands.add_command("fpcm_scan_network", "Scans all connected machines on a given network", function (event)
+        local entity_number = tonumber(event.parameter)
+        if not entity_number then
+            game.get_player(event.player_index).print("Invalid entity number.")
+            return
+        end
 
-    --         storage.FPCM = nil -- WRITE: clear the storage
-    --         player.print("Storage cleared.")
-    --     end)
+        --TODO: Rewrite of the scan command
+
+    end)
+
+    commands.add_command("fpcm_clear", "Clears the storage",
+        function(event)
+            local player = game.get_player(event.player_index)
+            if not player then return end
+
+            storage.FPCM = nil -- WRITE: clear the storage
+            player.print("Storage cleared.")
+        end)
 
     commands.add_command("fpcm_storage", "Prints the storage",
         function(event)

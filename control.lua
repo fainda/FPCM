@@ -1,5 +1,6 @@
 require("scripts.combinator")
 require("scripts.commands")
+require("global.functions")
 if script.active_mods["gvv"] then require("__gvv__.gvv")() end
 
 local mod_gui = require("mod-gui")
@@ -10,10 +11,14 @@ local function load_handler()
     storage = storage or {}
     storage.FPCM = storage.FPCM or {}
     storage.FPCM.sensors = storage.FPCM.sensors or {}
-    storage.FPCM.actors = storage.FPCM.actors or {}
-    add_commands()
+    storage.FPCM.actors = storage.actors or {}
+    print_to_debug("load handler called")
 end
-script.on_init(load_handler())
+script.on_init(function ()
+    add_commands()
+    load_handler()
+end)
+
 script.on_configuration_changed(load_handler()) --better safe than sorry
 script.on_load(load_handler())
 
