@@ -1,4 +1,4 @@
-local list = require("global.compatible_entities")
+local list = require("global").compatible_entities
 local sensors = list.sensors
 local actors = list.actors
 
