@@ -1,5 +1,9 @@
----@diagnostic disable-next-line: undefined-global
-local styles = data.raw["gui-style"].default
+require("prototypes.entities")
+require("prototypes.changes")
+require("prototypes.items.linking_combinator")
+
+
+--[[local styles = data.raw["gui-style"].default
 
 styles["test_content_frame"] = {
     type = "frame_style",
@@ -29,9 +33,4 @@ styles["test_deep_frame"] = {
     bottom_margin = 4
 }
 
-
-------------------------------------------------------------------------------------------------------------------------
-require("prototypes.entities")
-require("prototypes.changes")
-
-require("prototypes.items.linking_combinator")
+]]--

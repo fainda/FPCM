@@ -1,7 +1,7 @@
 local gv=require("global").vars --global vars
 local gf=require("global").functions --global properties
 local compatible_entities = require("global").compatible_entities
-local machine_object=require("scripts.machine")
+local machine_object=require("models.machine")
 
 --init combinator object
 local linking_combinator = {}

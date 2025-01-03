@@ -1,10 +1,11 @@
-require("scripts.combinator")
+require("scripts.update")
 require("scripts.commands")
+
 local gv=require("global").vars --global vars
 local gf=require("global").functions --global properties
-if script.active_mods["gvv"] then require("__gvv__.gvv")() end
 
-local mod_gui = require("mod-gui")
+if gv.debug_mode and script.active_mods["gvv"] then require("__gvv__.gvv")() end
+
 
 
 -- define tables
@@ -14,15 +15,18 @@ local function load_handler()
     storage.FPCM.linker = storage.FPCM.linker or {}
     gf:print_to_debug("load handler called")
 end
+
+--call handlers on certain events
 script.on_init(function ()
     add_commands()
     load_handler()
 end)
-
 script.on_configuration_changed(load_handler()) --better safe than sorry
 script.on_load(load_handler())
 
 
+--[[
+--local mod_gui = require("mod-gui")
 -- Create the button when the player joins the game
 script.on_event(defines.events.on_player_created, function(event)
     local player = game.get_player(event.player_index)
@@ -186,44 +190,4 @@ function open_example_window(player)
         caption = "[testlabel]"
     }
 end
-
-
-
---DRAG LOGIC?
-
--- local drag_data = {}
-
--- script.on_event(defines.events.on_gui_click, function(event)
---     -- Close the window when the close button is clicked
---     if event.element.name == "fpcm_close_window_button" then
---         event.element.closest("frame").destroy()
---     end
--- end)
-
--- script.on_event(defines.events.on_gui_dragged, function(event)
---     -- Check if the dragged element is the draggable space
---     if event.element.name == "drag_space" then
---         local frame = event.element.closest("frame")
---         if not frame then return end
-
---         -- Update the window position
---         if not drag_data[frame.name] then
---             drag_data[frame.name] = {initial_x = frame.position.x, initial_y = frame.position.y, start_x = event.mouse_position.x, start_y = event.mouse_position.y}
---         end
-
---         -- Calculate the new position
---         local delta_x = event.mouse_position.x - drag_data[frame.name].start_x
---         local delta_y = event.mouse_position.y - drag_data[frame.name].start_y
---         frame.position = {x = drag_data[frame.name].initial_x + delta_x, y = drag_data[frame.name].initial_y + delta_y}
---     end
--- end)
-
--- script.on_event(defines.events.on_gui_mouse_up, function(event)
---     -- Reset the dragging data when the mouse is released
---     if event.element.name == "drag_space" then
---         local frame = event.element.closest("frame")
---         if frame then
---             drag_data[frame.name] = nil
---         end
---     end
--- end)
+]]--

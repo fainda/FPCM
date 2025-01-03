@@ -2,18 +2,10 @@
 --get global vars
 local gv=require("global").vars --global vars
 local gf=require("global").functions --global properties
-local compatible_entities = require("global").compatible_entities
-local machine_object=require("scripts.machine")
 local linking_combinator=require("models.linker")
 
 
---create an event every second (4s for debugging)
-local frequency = gv.debug_mode and 240 or 60
-script.on_nth_tick(frequency, function(event) handler(event) end)
---call everything inside every event
-function handler(event)
-    gf:try_and_catch(update_combinators, "update combinators")
-end
+
 
 function update_combinators()
     for _, surface in pairs(game.surfaces) do
@@ -33,3 +25,15 @@ function update_combinators()
         --surface loop ends here
     end
 end
+
+
+
+
+--create an event every second (4s for debugging)
+local frequency = gv.debug_mode and 240 or 60
+script.on_nth_tick(frequency, function(event) handler(event) end)
+--call everything inside every event
+function handler(event)
+    gf:try_and_catch(update_combinators, "update combinators")
+end
+
