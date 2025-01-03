@@ -3,6 +3,9 @@ local linking_combinator = table.deepcopy(data.raw["constant-combinator"]["const
 linking_combinator.name = "linking-combinator"
 linking_combinator.flags = {"placeable-neutral", "player-creation", "get-by-unit-number"}
 linking_combinator.minable.result = "linking-combinator"
+linking_combinator.icon = "__FPCM__/graphics/icons/items/linking_combinator.png"
+linking_combinator.icon_size = 64
+linking_combinator.icon_mipmaps = 4
 --coloring of the entity
 linking_combinator.sprites.north.layers[1].tint = { r = 0, g = 1, b = 0, a = 1 } -- green
 linking_combinator.sprites.east.layers[1].tint = { r = 0, g = 1, b = 0, a = 1 } -- green
