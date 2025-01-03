@@ -52,8 +52,9 @@ end
 
 
 
---create an event every 4 seconds (4 for debugging)
-script.on_nth_tick(240, function(event) handler(event) end)
+--create an event every second (4s for debugging)
+local frequency = gv.debug_mode and 240 or 60
+script.on_nth_tick(frequency, function(event) handler(event) end)
 --call everything inside every event
 function handler(event)
     gf:try_and_catch(update_combinators, "update combinators")
@@ -64,13 +65,13 @@ function update_combinators()
         --surface loop starts here
         for _, entity in pairs(surface.find_entities_filtered { name = "linking-combinator" }) do
             if entity.get_control_behavior() then
-                if gf:get_root_path()["sensors"][entity.unit_number]
+                if gf:get_root_path()["linker"][entity.unit_number]
                 then --update logic
-                    gf:get_root_path()["sensors"][entity.unit_number]:verify_self()
-                    gf:get_root_path()["sensors"][entity.unit_number]:update_networks()
+                    gf:get_root_path()["linker"][entity.unit_number]:verify_self()
+                    gf:get_root_path()["linker"][entity.unit_number]:update_networks()
                 else --create logic
-                    gf:get_root_path()["sensors"][entity.unit_number] = {}
-                    gf:get_root_path()["sensors"][entity.unit_number] = linking_combinator:new(entity)
+                    gf:get_root_path()["linker"][entity.unit_number] = {}
+                    gf:get_root_path()["linker"][entity.unit_number] = linking_combinator:new(entity)
                 end
             end
         end
