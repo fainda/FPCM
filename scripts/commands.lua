@@ -92,45 +92,54 @@ function add_commands()
     commands.add_command("fpcm_scan_network", "Scans all connected machines on a given network", function (event)
         local entity_number = tonumber(event.parameter)
         if not entity_number then
-            game.get_player(event.player_index).print("Invalid entity number.")
+            gf:print_to_console("Invalid entity number.")
             return
         end
 
         -- Ensure FPCM and the entity_number table are initialized
-        gf:get_root_path()["linker"] = gf:get_root_ors()["sensors"] or {}
-        gf:get_root_path()["linker"][entity_number].machines = gf:get_root_path()["linker"][entity_numberchines or {}
+        if not gf:get_root_path()["linker"][entity_number] then gf:print_to_console("no entry found") end
+        
+        local linker=gf:get_root_path()["linker"][entity_number]
 
-        local input_network = gf:get_root_path()["linker"][entity_number].netwot
-        local output_network = gf:get_root_path()["linker"][entity_number].networks.output
+        local input_network = linker.network.input
+        local output_network = linker.networks.output
 
         local sensor_machines = {}
         local actor_machines = {}
 
-        local surface = gf:get_root_path()["linker"][entity_number].surface
-        local force = gf:get_root_path()["linker"][entity_number].force
+        local surface = linker.surface
+        local force = linker.force
 
         --Scan surface for machines
         for _, machine in pairs(surface.find_entities_filtered({force = force})) do
             if machine.valid and machine.get_control_behavior() then
-                if machine.get_control_behavior().get_circuit_network(1) and
-                    machine.get_control_behavior().get_circuit_network(1).network_id == output_network then
-                    table.insert(sensor_machines, {
+                if
+                machine.get_control_behavior().get_circuit_network(1)
+                and machine.get_control_behavior().get_circuit_network(1).network_id == output_network
+                then
+                    -- run when machine is in the same network (red) as linker
+                    sensor_machines[machine.unit_number]={ --MAKE THIS A MACHINE OBJECT
                         type = machine.type,
                         name = machine.name,
                         unit_number = machine.unit_number,
                         position = machine.position,
-                        status = machine.status
-                    })
+                        status = machine.status,
+                        signals={}--SIGNALS GO HERE
+                    }
                 end
-                if machine.get_control_behavior().get_circuit_network(2) and
-                    machine.get_control_behavior().get_circuit_network(2).network_id == input_network then
-                    table.insert(actor_machines, {
+                if
+                machine.get_control_behavior().get_circuit_network(2)
+                and machine.get_control_behavior().get_circuit_network(2).network_id == input_network
+                then
+                    -- run when machine is in the same network (green) as linker
+                    sensor_machines[machine.unit_number]={
                         type = machine.type,
                         name = machine.name,
                         unit_number = machine.unit_number,
                         position = machine.position,
-                        status = machine.status
-                    })
+                        status = machine.status,
+                        signals={}--SIGNALS GO HERE
+                    }
                 end
             end
         end
