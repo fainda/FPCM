@@ -115,7 +115,7 @@ function functions:highlight_entity(entity, color, text) -- entity = LuaEntity, 
     end
 end
 
-function functions:status_int_to_string(status_number)
+function functions:status_int_to_str(status_number)
     for name, numb in pairs(defines.entity_status) do
         if numb == status_number then
             return name

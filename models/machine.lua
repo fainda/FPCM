@@ -10,7 +10,7 @@ function machine:new(machine_entity)
         name = machine_entity.name,
         unit_number = machine_entity.unit_number,
         position = machine_entity.position,
-        status = gf:status_int_to_string(machine_entity.status),
+        status = gf:status_int_to_str(machine_entity.status),
         signals={}--SIGNALS GO HERE
     }
     setmetatable(obj, self)
