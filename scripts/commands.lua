@@ -13,6 +13,7 @@ function add_commands()
         -- Ensure FPCM and the entity_number table are initialized
         if not gf:get_root_path()["linker"][entity_number] then gf:print_to_console("no entry found") end
         
+        gf:get_root_path()["linker"][entity_number]:drop_machines()
         gf:get_root_path()["linker"][entity_number]:find_machines()
 
 
@@ -46,6 +47,11 @@ function add_commands()
 
             storage.FPCM = nil -- WRITE: clear the storage
             player.print("Storage cleared.")
+        end)
+
+    commands.add_command("fpcm_break", "breakpoint for debugging",
+        function(event)
+            --woahh
         end)
 
     commands.add_command("fpcm_storage", "Prints the storage",
