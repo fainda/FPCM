@@ -36,6 +36,7 @@ function linking_combinator:find_machines()
                 -- run when machine is in the same network (red) as self and is compatible
                 self.machines.actor = self.machines.actor or {}
                 self.machines.actor[machine.unit_number]=machine_object:new(machine)
+                gf:highlight_entity(machine, 1, true)
             end
             if
             machine.get_control_behavior().get_circuit_network(2)
@@ -45,6 +46,7 @@ function linking_combinator:find_machines()
                 -- run when machine is in the same network (green) as self and is compatible
                 self.machines.sensor = self.machines.sensor or {}
                 self.machines.sensor[machine.unit_number]=machine_object:new(machine)
+                gf:highlight_entity(machine, 2, true)
             end
         end
     end

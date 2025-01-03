@@ -24,12 +24,14 @@ properties["assembling-machine"] = {
 }
 
 properties["reactor"] = {
-    "energy",
-    "temperature",
-    "active",
-    "status",
-    "burner",
-    "health"
+    -- "energy",
+    -- "temperature",
+    -- "active",
+    -- "status",
+    -- "burner",
+    -- "health"
+    "read_fuel",
+    "read_temperature",
 }
 
 properties["pump"] = {

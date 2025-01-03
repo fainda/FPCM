@@ -15,7 +15,7 @@ function add_commands()
         -- Ensure FPCM and the unit_number table are initialized
         if not linker then gf:print_to_console("no entry found") end
         
-        linker:drop_machines()
+        linker:drop_machines() -- TODO: not findable ingame
         linker:find_machines()
     end)
 
@@ -60,6 +60,15 @@ function add_commands()
             local entity = game.get_entity_by_unit_number(params.unit)
             if entity then player.print(serpent.block(entity.get_circuit_network(params.id))) else player.print("no entity with \"unit_number:\" "..params.unit.." found") end
             --player.print(serpent.block(storage.FPCM)) -- READ: get the storage.FPCM table in all its glory
+        end)
+
+    commands.add_command("fpcm_highlight_by_number", "highlight an entity by unit number",
+        function(event)
+            local player = game.get_player(event.player_index)
+            if not player then return end
+
+            local entity = game.get_entity_by_unit_number(tonumber(event.parameter))
+            if entity then gf:highlight_entity(entity, 1) else player.print("no entity with unit number "..event.parameter.." found") end
         end)
 
 end
