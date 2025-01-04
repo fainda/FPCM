@@ -1,6 +1,9 @@
+local gv=require("global").vars --global vars
+local gf=require("global").functions --global properties
+
 local properties = {}
 
-properties.general = {
+properties.always_include = {
     "name",
     "type",
     "position",
@@ -8,10 +11,13 @@ properties.general = {
     "force",
 }
 
+properties.always_exclude = {
+    -- :3
+}
+
 properties["assembling-machine"] = {
     "crafting_progress",
     "energy",
-    "energy_usage",
     "fluidbox",
     "crafting_speed",
     "electric_buffer_size",
@@ -46,5 +52,14 @@ properties["pump"] = {
     "neighbours",
     "health"
 }
+
+function properties:find(name) --will return all valid properties of an entity with set name
+    local result
+    if properties[name] then
+        result = gf.tables:union(properties.always_include, properties[name])
+    else result = properties.always_include
+    end
+    return result
+end
 
 return properties
