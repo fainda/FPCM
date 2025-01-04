@@ -14,7 +14,7 @@ function add_commands()
             -- Ensure FPCM and the unit_number table are initialized
             if not linker then gf:print_to_console("no entry found") end
 
-            linker:drop_machines() -- TODO: not findable ingame
+            linker:drop_machines()
             linker:update()
         end)
 

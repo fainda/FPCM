@@ -22,7 +22,6 @@ properties["assembling-machine"] = {
     "crafting_speed",
     "electric_buffer_size",
     "active",
-    "status",
     "speed_bonus",
     "productivity_bonus",
     "consumption_bonus",
@@ -33,7 +32,6 @@ properties["reactor"] = {
     "energy",
     "temperature",
     "active",
-    "status",
     "burner",
     "health"
 }
@@ -46,7 +44,7 @@ properties["accumulator"] = {
 properties["transport-belt"] = {
     "direction",
     "energy",
-    "belt_speed",
+    "prototype.belt_speed",
     "get_control_behavior()"
 }
 
