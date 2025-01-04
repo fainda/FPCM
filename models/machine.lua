@@ -6,7 +6,7 @@ local machine={}
 function machine:new(machine_entity)
     local obj={
         type = machine_entity.type,
-        name = machine_entity.name,
+        name = machine_entity.name .. " " .. machine_entity.unit_number,
         unit_number = machine_entity.unit_number,
         position = machine_entity.position,
         status = gf:status_int_to_str(machine_entity.status),

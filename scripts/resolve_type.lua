@@ -29,29 +29,29 @@ properties["assembling-machine"] = {
     "health"
 }
 
-properties["reactor"] = {
+-- properties["reactor"] = {
     -- "energy",
     -- "temperature",
     -- "active",
     -- "status",
     -- "burner",
     -- "health"
-    "read_fuel",
-    "read_temperature",
-}
+    -- "read_fuel",
+    -- "read_temperature",
+-- }
 
-properties["pump"] = {
-    "fluidbox.fluidbox[1]", --input
-    "fluidbox.fluidbox[2]", --output
-    "fluid_usage_per_tick",
-    "energy",
-    "energy_usage",
-    "active",
-    "status",
-    "direction",
-    "neighbours",
-    "health"
-}
+-- properties["pump"] = {
+--     "fluidbox.fluidbox[1]", --input
+--     "fluidbox.fluidbox[2]", --output
+--     "fluid_usage_per_tick",
+--     "energy",
+--     "energy_usage",
+--     "active",
+--     "status",
+--     "direction",
+--     "neighbours",
+--     "health"
+-- }
 
 function properties:find(name) --will return all valid properties of an entity with set name
     local result

@@ -67,7 +67,7 @@ function functions:find_entities_by_type(name)
     return entities
 end
 
-function functions:highlight_entity(entity, color, text) -- entity = LuaEntity, color = 1 or 2, text = boolean
+function functions:highlight_entity(entity, color, text) -- entity = LuaEntity, color = 1 or 2, text = boolean|string
     local role
     if type(entity) == "number" then
         entity = game.get_entity_by_unit_number(entity)
@@ -75,7 +75,7 @@ function functions:highlight_entity(entity, color, text) -- entity = LuaEntity, 
     if color == 1 then
         color = { r = 1, g = 0, b = 0 }
         role = "actor"
-    else
+    elseif color == 2 then
         color = { r = 0, g = 1, b = 0 }
         role = "sensor"
     end
@@ -104,11 +104,11 @@ function functions:highlight_entity(entity, color, text) -- entity = LuaEntity, 
     })
     if type(text) == "boolean" and text == true then
         rendering.draw_text({
-            text = {"", {"hologram-text." .. role}},
+            text = { "", { "hologram-text." .. role } },
             surface = surface,
             target = entity,
             alignment = "center",
-            color = { r = 1, g = 1, b = 1 },
+            color = { r = 1, g = 1, b = 1 }, -- if you want your text to be colored, use "[color=red/green]Your awesome string[/color] (same works with [font])"
             scale = 0.75,
             time_to_live = duration,
             use_rich_text = true
@@ -121,12 +121,39 @@ function functions:highlight_entity(entity, color, text) -- entity = LuaEntity, 
             surface = surface,
             target = entity,
             alignment = "center",
-            color = { r = 1, g = 1, b = 1 },
+            color = { r = 1, g = 1, b = 1 }, -- if you want your text to be colored, use "[color=red/green]Your awesome string[/color] (same works with [font])"
             scale = 0.75,
             time_to_live = duration,
             use_rich_text = true
         })
     end
+end
+
+function functions:draw_to_highlight(pos_a, pos_b, surface, color)
+    local x = { pos_b.x, pos_a.y }                    -- this is the point where the line will change direction, it is the intersection between the b.x and a.y
+    color = color or { r = 1, g = 1, b = 0, a = 0.5 } -- given or yellow
+
+    rendering.draw_line({                             --line from linker
+        color = color,
+        width = 2,
+        gap_length = 0,
+        dash_length = 0,
+        from = pos_a,
+        to = x,
+        surface = surface,
+        time_to_live = 60 * 10
+    })
+
+    rendering.draw_line({ --line to machine
+        color = color,
+        width = 2,
+        gap_length = 0,
+        dash_length = 0,
+        from = x,
+        to = pos_b,
+        surface = surface,
+        time_to_live = 60 * 10
+    })
 end
 
 function functions:status_int_to_str(status_number)
