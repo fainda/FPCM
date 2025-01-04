@@ -258,12 +258,13 @@ local compatible = {}
 compatible.sensors = {
     "reactor",
     "assembling-machine",
-    "centrifuge",
     "mining-drill",
     "accumulator",
     "transport-belt",
     "inserter",
-    "logistic-container"
+    "logistic-container",
+    "container",
+    "storage-tank"
 }
 compatible.actors = {
     "assembling-machine",

@@ -28,7 +28,7 @@ function machine:update_signals()
     self.signals = {}
     if entity then
         for _, property in ipairs(properties) do
-            if not string.find(property, "%(%s*%)") then -- "%(%s*%)" is a regex pattern that matches an empty set of parentheses
+            if not string.find(property, "%(%.*%)$") then -- "%(%.*%)$" is a regex pattern that matches a function call with or without arguments
                 local prefix, actual_property = string.match(property, "^(.-)%.(.+)$")
                 if prefix and actual_property then
                     local success, value = pcall(function() return entity[prefix][actual_property] end)

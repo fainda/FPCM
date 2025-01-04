@@ -44,8 +44,9 @@ properties["accumulator"] = {
 properties["transport-belt"] = {
     "direction",
     "energy",
+    "neighbours",
     "prototype.belt_speed",
-    "get_control_behavior()"
+    "get_transport_line(1)"
 }
 
 function properties:find(name) --will return all valid properties of an entity with set name
