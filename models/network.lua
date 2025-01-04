@@ -12,14 +12,18 @@ function network:new(circuit_network)
         id = circuit_network.network_id,
         type = type, -- "output" or "input"
         machines = {},
+        machine_type = nil,
+        valid = true
         --signals = circuit_network.signals()
     }
     setmetatable(obj, self)
     self.__index = self
     return obj
 end
-function network:find_machines(linker)
+function network:update(linker) --old: find_machines()
     self.machines={}--clear array everytime it is called
+    self.valid=true --standardly valid
+    self.machine_type=nil --standardly empty
     local connector_id
     local machine_role
     if self.type == "output" then connector_id=1 machine_role="actors"
@@ -27,14 +31,16 @@ function network:find_machines(linker)
     else return {}
     end
     for _, machine in pairs(game.get_surface(linker.surface).find_entities_filtered({force = linker.force})) do
-        if machine.valid and machine.get_control_behavior() then
-            if
-            machine.get_control_behavior().get_circuit_network(connector_id)
-            and machine.get_control_behavior().get_circuit_network(connector_id).network_id == self.id
-            and gf:array_contains_value(compatible_entities[machine_role], machine.type)
-            then
-                -- run when machine is in the same network as self and is compatible
-                self.machines[machine.unit_number]=machine_object:new(machine)
+        if
+        machine.valid and machine.get_control_behavior()
+        and machine.get_control_behavior().get_circuit_network(connector_id)
+        and machine.get_control_behavior().get_circuit_network(connector_id).network_id == self.id
+        and gf:array_contains_value(compatible_entities[machine_role], machine.type)
+        then
+            -- run when machine is in the same network as self and is compatible
+            self.machines[machine.unit_number]=machine_object:new(machine)
+            if self.machine_type == nil then self.machine_type=machine.type
+            elseif self.machine_type ~= machine.type then self.valid=false                    
             end
         end
     end

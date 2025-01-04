@@ -15,7 +15,7 @@ function add_commands()
             if not linker then gf:print_to_console("no entry found") end
 
             linker:drop_machines() -- TODO: not findable ingame
-            linker:find_machines()
+            linker:update()
         end)
 
     commands.add_command("fpcm_clear", "Clears the storage",

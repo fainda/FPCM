@@ -32,12 +32,12 @@ function linking_combinator:update_networks()
         local input_network = entity.get_control_behavior().get_circuit_network(2)
         if output_network then
             self.networks[output_network.network_id] = network_object:new(output_network)
-            self.networks[output_network.network_id]:find_machines(self)
+            self.networks[output_network.network_id]:update(self)
             self.networks[output_network.network_id]:update_signals()
         end
         if input_network then
             self.networks[input_network.network_id] = network_object:new(input_network)
-            self.networks[input_network.network_id]:find_machines(self)
+            self.networks[input_network.network_id]:update(self)
             self.networks[input_network.network_id]:update_signals()
         end
         
