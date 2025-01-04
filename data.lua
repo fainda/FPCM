@@ -2,6 +2,10 @@ require("prototypes.entities")
 require("prototypes.changes")
 require("prototypes.items.linking_combinator")
 require("prototypes.items.logic_controller")
+require("prototypes.items.field-pc-1")
+require("prototypes.items.field-pc-2")
+require("prototypes.equipment.field-pc-1")
+require("prototypes.equipment.field-pc-2")
 
 
 --[[local styles = data.raw["gui-style"].default
