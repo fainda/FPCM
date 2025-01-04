@@ -130,30 +130,52 @@ function functions:highlight_entity(entity, color, text) -- entity = LuaEntity, 
 end
 
 function functions:draw_to_highlight(pos_a, pos_b, surface, color)
-    local x = { pos_b.x, pos_a.y }                    -- this is the point where the line will change direction, it is the intersection between the b.x and a.y
     color = color or { r = 1, g = 1, b = 0, a = 0.5 } -- given or yellow
+    if pos_a.x == pos_b.x or pos_a.y == pos_b.y then -- a.x == b.x or a.y == b.y means they are on the same axis, so we can draw a straight line and save precious UPS
+        rendering.draw_line({
+            color = color or { r = 1, g = 1, b = 0, a = 0.5 },
+            width = 2,
+            gap_length = 0,
+            dash_length = 0,
+            from = pos_a,
+            to = pos_b,
+            surface = surface,
+            time_to_live = 60 * 10
+        })
+    else
+        local x = { pos_b.x, pos_a.y } -- this is the point where the line will change direction, it is the intersection between the b.x and a.y
 
-    rendering.draw_line({                             --line from linker
-        color = color,
-        width = 2,
-        gap_length = 0,
-        dash_length = 0,
-        from = pos_a,
-        to = x,
-        surface = surface,
-        time_to_live = 60 * 10
-    })
+        rendering.draw_line({          --line from linker
+            color = color,
+            width = 2,
+            gap_length = 0,
+            dash_length = 0,
+            from = pos_a,
+            to = x,
+            surface = surface,
+            time_to_live = 60 * 10
+        })
 
-    rendering.draw_line({ --line to machine
-        color = color,
-        width = 2,
-        gap_length = 0,
-        dash_length = 0,
-        from = x,
-        to = pos_b,
-        surface = surface,
-        time_to_live = 60 * 10
-    })
+        rendering.draw_circle({        --circle at intersection
+            color = color,
+            radius = 0.1,
+            filled = true,
+            target = x,
+            surface = surface,
+            time_to_live = 60 * 10
+        })
+
+        rendering.draw_line({ --line to machine
+            color = color,
+            width = 2,
+            gap_length = 0,
+            dash_length = 0,
+            from = x,
+            to = pos_b,
+            surface = surface,
+            time_to_live = 60 * 10
+        })
+    end
 end
 
 function functions:status_int_to_str(status_number)

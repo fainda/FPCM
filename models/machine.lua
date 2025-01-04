@@ -26,8 +26,28 @@ function machine:update_signals()
     self.signals={}
     if entity then
         for _, property in ipairs(properties) do
-            if entity[property] ~= nil then
-                self.signals[property] = entity[property]
+            if not string.find(property, "%(%s*%)") then -- "%(%s*%)" is a regex pattern that matches an empty set of parentheses
+                local success, value = pcall(function() return entity[property] end)
+                local proto_success, proto_value = pcall(function() return entity.prototype[property] end)
+                if success and value ~= nil then
+                    self.signals[property] = value
+                elseif proto_success and proto_value ~= nil then
+                    self.signals[property] = proto_value
+                else
+                    gf:print_to_console("Property " .. property .. " not found for " .. self.name)
+                end
+            else
+                local func = property -- for example, "get_control_behavior()"
+                local success, result = pcall(function()
+                    local env = { entity = entity }
+                    setmetatable(env, { __index = _G })
+                    return load("return entity." .. func, nil, "t", env)()
+                end)
+                if success and result ~= nil then
+                    self.signals[func] = result
+                else
+                    gf:print_to_console("Function " .. func .. " failed for " .. self.name)
+                end
             end
         end
     end

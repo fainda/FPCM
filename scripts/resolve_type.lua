@@ -3,7 +3,7 @@ local gf=require("global").functions --global properties
 
 local properties = {}
 
-properties.always_include = {
+properties.always_include = { -- TODO: (Very Big) look up all properties of all entity types we are interested in
     "name",
     "type",
     "position",
@@ -26,32 +26,29 @@ properties["assembling-machine"] = {
     "speed_bonus",
     "productivity_bonus",
     "consumption_bonus",
+    "health",
+}
+
+properties["reactor"] = {
+    "energy",
+    "temperature",
+    "active",
+    "status",
+    "burner",
     "health"
 }
 
--- properties["reactor"] = {
-    -- "energy",
-    -- "temperature",
-    -- "active",
-    -- "status",
-    -- "burner",
-    -- "health"
-    -- "read_fuel",
-    -- "read_temperature",
--- }
+properties["accumulator"] = {
+    "energy", -- stored energy in form of Joules
+    "prototype.electric_energy_source_prototype.buffer_capacity", -- maximum energy storage in Joules
+}
 
--- properties["pump"] = {
---     "fluidbox.fluidbox[1]", --input
---     "fluidbox.fluidbox[2]", --output
---     "fluid_usage_per_tick",
---     "energy",
---     "energy_usage",
---     "active",
---     "status",
---     "direction",
---     "neighbours",
---     "health"
--- }
+properties["transport-belt"] = {
+    "direction",
+    "energy",
+    "belt_speed",
+    "get_control_behavior()"
+}
 
 function properties:find(name) --will return all valid properties of an entity with set name
     local result

@@ -1,4 +1,4 @@
-local gv = require("global").vars    --global vars
+local gv = require("global").vars      --global vars
 local gf = require("global").functions --global properties
 
 
@@ -29,7 +29,11 @@ function add_commands()
 
     commands.add_command("fpcm_break", "breakpoint for debugging",
         function(event)
-            --woahh
+            if game then
+                if true then
+                    --woahh
+                end
+            end
         end)
 
     commands.add_command("fpcm_call_function", "call a specified function or method (has to be in scope of commands.lua)",
@@ -60,8 +64,12 @@ function add_commands()
             if not player or not params or not params.id or not params.unit then return end
 
             local entity = game.get_entity_by_unit_number(params.unit)
-            if entity then player.print(serpent.block(entity.get_circuit_network(params.id))) else player.print(
-                "no entity with \"unit_number:\" " .. params.unit .. " found") end
+            if entity then
+                player.print(serpent.block(entity.get_circuit_network(params.id)))
+            else
+                player.print(
+                    "no entity with \"unit_number:\" " .. params.unit .. " found")
+            end
             --player.print(serpent.block(storage.FPCM)) -- READ: get the storage.FPCM table in all its glory
         end)
 
@@ -71,8 +79,12 @@ function add_commands()
             if not player then return end
 
             local entity = game.get_entity_by_unit_number(tonumber(event.parameter))
-            if entity then gf:highlight_entity(entity, 1) else player.print("no entity with unit number " ..
-                event.parameter .. " found") end
+            if entity then
+                gf:highlight_entity(entity, 1)
+            else
+                player.print("no entity with unit number " ..
+                    event.parameter .. " found")
+            end
         end)
 
     commands.add_command("fpcm_show", "Shows all entities connected to a given controller", function(event)
@@ -81,7 +93,7 @@ function add_commands()
             gf:print_to_console("Invalid entity number.")
             return
         end
-        gf:highlight_entity(linker.unit_number, {r = 1, g = 1, b = 0}, linker.name)
+        gf:highlight_entity(linker.unit_number, { r = 1, g = 1, b = 0 }, linker.name)
         -- loop through all machines of this linker and highlight them
         for _, network in pairs(linker.networks) do
             if network.type == "output" then
@@ -120,5 +132,13 @@ function add_commands()
             end
         end
         gf:print_to_console("No entity with unit number: " .. params.unit .. " found.")
+    end)
+
+    commands.add_command("fpcm_storage_to_json", "Converts the storage to JSON", function(event)
+        -- export the storage.fpcm table to a json file and save it to scripts output
+        local json = helpers.table_to_json(gf:get_root_path())
+        helpers.write_file("storage_fpcm.json", json)
+
+        gf:print_to_console("Storage saved to storage_fpcm.json")
     end)
 end

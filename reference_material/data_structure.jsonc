@@ -1,43 +1,77 @@
 {
-    "storage": {
-        "FPCM": {
-            "unit_number": { // This is the number we need to access the entity
-                "red": {
-                    "signals": {
-                        "wood": 50
-                    } // Signals we dont really need
-                },
-                "green": {
-                    "signals": {
-                        "coal": 10
-                    } // Signals we dont really need
-                },
-                "position": {
-                    "x": 0,
-                    "y": 0
-                }, // Position of the entity so you can find it with surface.find_entity("UNIT_NUMBER, POSITION)
-                "surface": "nauvis",
-                "MachinesRED": {
-                    "reactor": {
-                        "name": "reactor",
-                        "state": "off",
-                        "position": {
-                            "x": 0,
-                            "y": 0
+    "linker": {
+        "21": {
+            "unit_number": 21,
+            "name": "linking combinator 21",
+            "surface": "nauvis",
+            "position": {
+                "y": 1.5,
+                "x": 2.5
+            },
+            "networks": [
+                {
+                    "id": 1,
+                    "type": "input",
+                    "machines": {
+                        "29": {
+                            "type": "reactor",
+                            "name": "nuclear-reactor 29",
+                            "unit_number": 29,
+                            "position": {
+                                "y": 5.5,
+                                "x": -1.5
+                            },
+                            "status": "working",
+                            "signals": {
+                                "name": "nuclear-reactor",
+                                "type": "reactor",
+                                "position": {
+                                    "y": 5.5,
+                                    "x": -1.5
+                                },
+                                "status": 1,
+                                "force": null,
+                                "energy": 44444.444444444379769265651702880859375,
+                                "temperature": 148.00000000000051159076974727213382720947265625,
+                                "active": true,
+                                "burner": null, // is explorable
+                                "health": 500
+                            }
+                        },
+                        "33": {
+                            "type": "assembling-machine",
+                            "name": "assembling-machine-3 33",
+                            "unit_number": 33,
+                            "position": {
+                                "y": 4.5,
+                                "x": 6.5
+                            },
+                            "status": "working",
+                            "signals": {
+                                "name": "assembling-machine-3",
+                                "type": "assembling-machine",
+                                "position": {
+                                    "y": 4.5,
+                                    "x": 6.5
+                                },
+                                "status": 1,
+                                "force": null,
+                                "crafting_progress": 0.3333333333333241998985840837121941149234771728515625,
+                                "energy": 6888.888888888888686778955161571502685546875,
+                                "fluidbox": null,
+                                "crafting_speed": 1.25,
+                                "electric_buffer_size": 6888.888888888888686778955161571502685546875,
+                                "active": true,
+                                "speed_bonus": 0,
+                                "productivity_bonus": 0,
+                                "consumption_bonus": 0,
+                                "health": 400
+                            }
                         }
-                    } // More machines can be added here
-                },
-                "MachinesGREEN": {
-                    "reactor": {
-                        "name": "reactor",
-                        "state": "off",
-                        "position": {
-                            "x": 0,
-                            "y": 0
-                        }
-                    } // More machines can be added here
+                    }
                 }
-            }
+            ],
+            "force": null
         }
     }
 }
