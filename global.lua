@@ -74,10 +74,10 @@ function functions:highlight_entity(entity, color, text) -- entity = LuaEntity, 
     end
     if color == 1 then
         color = { r = 1, g = 0, b = 0 }
-        role = "Actor"
+        role = "actor"
     else
         color = { r = 0, g = 1, b = 0 }
-        role = "Sensor"
+        role = "sensor"
     end
     local surface = entity.surface
     local bounding_box = entity.bounding_box
@@ -102,15 +102,29 @@ function functions:highlight_entity(entity, color, text) -- entity = LuaEntity, 
         right_bottom = { x = bounding_box.right_bottom.x + 0.4, y = bounding_box.right_bottom.y + 0.4 },
         time_to_live = duration
     })
-    if text then
+    if type(text) == "boolean" and text == true then
         rendering.draw_text({
-            text = "Added as " .. role,
+            text = {"", {"hologram-text." .. role}},
             surface = surface,
             target = entity,
             alignment = "center",
             color = { r = 1, g = 1, b = 1 },
-            scale = 0.5,
-            time_to_live = duration
+            scale = 0.75,
+            time_to_live = duration,
+            use_rich_text = true
+        })
+    end
+
+    if type(text) == "string" then
+        rendering.draw_text({
+            text = text,
+            surface = surface,
+            target = entity,
+            alignment = "center",
+            color = { r = 1, g = 1, b = 1 },
+            scale = 0.75,
+            time_to_live = duration,
+            use_rich_text = true
         })
     end
 end
