@@ -37,7 +37,7 @@ function functions:try_and_catch(func, func_name) --best and worst thing yet
 end
 
 function functions:get_root_path()
-    return storage.FPCM
+    return storage[vars.mod_name]
 end                                                          --resolve rootpath via method in case of changes
 
 function functions:array_contains_value(array, target_value) --check array for a target value

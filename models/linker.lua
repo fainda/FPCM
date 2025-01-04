@@ -13,19 +13,18 @@ function linking_combinator:new(combinator_entity)
         name = "linking combinator "..combinator_entity.unit_number, -- this will be displayed in the GUI
         surface = combinator_entity.surface.name,
         position = combinator_entity.position,
-        networks = {input=nil, output=nil},
-        machines = {}, --create machine array
+        networks = {},
         force = combinator_entity.force
     }
     setmetatable(obj, self)
     self.__index = self
     return obj
 end
-function linking_combinator:deconstruct()
+--[[function linking_combinator:deconstruct()
     gf:get_root_path()["linker"][self.unit_number] = nil
     gf:conditional_broadcast(gv.debug_mode and gv.verbose, "deconstructed linker")
-end
-function linking_combinator:find_machines()
+end]]--
+--[[function linking_combinator:find_machines()
     for _, machine in pairs(game.get_surface(self.surface).find_entities_filtered({force = self.force})) do
         if machine.valid and machine.get_control_behavior() then
             if
@@ -50,7 +49,7 @@ function linking_combinator:find_machines()
             end
         end
     end
-end
+end]]--
 function linking_combinator:drop_machines()
     self.machines={}
 end
@@ -58,12 +57,19 @@ function linking_combinator:update_name(name)
     self.name=name
 end
 function linking_combinator:update_networks()
+    self.networks={}--clear tables before update
     local entity = game.get_entity_by_unit_number(self.unit_number)
     if entity and entity.get_control_behavior() then
         local output_network = entity.get_control_behavior().get_circuit_network(1)
         local input_network = entity.get_control_behavior().get_circuit_network(2)
-        self.networks.output = output_network and output_network.network_id or nil --old name: signal_red
-        self.networks.input = input_network and input_network.network_id or nil --old name: signal_green
+        if output_network then
+            self.networks[output_network.network_id] = network_object:new(output_network)
+            self.networks[output_network.network_id]:find_machines(self)
+        end
+        if input_network then
+            self.networks[input_network.network_id] = network_object:new(input_network)
+            self.networks[input_network.network_id]:find_machines(self)
+        end
     end
 end
 --this following function may not be necessary, as unit numbers are not reused and these properties are therefore static

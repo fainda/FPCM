@@ -5,7 +5,7 @@ local compatible_entities = require("global").compatible_entities
 local load_handler={}
 
 function load_handler:new()
-    obj = {
+    local obj = {
         has_executed=false
     }
     setmetatable(obj, self)
@@ -15,8 +15,7 @@ end
 
 function load_handler:execute()
     storage = storage or {}
-    storage.FPCM = storage.FPCM or {}
-    storage.FPCM.linker = storage.FPCM.linker or {}
+    storage[gv.mod_name] = storage[gv.mod_name] or require("models.fpcm_table"):new()
     gf:conditional_broadcast(gv.debug_mode and gv.verbose, "load handler called")
     add_commands()
     self.has_executed=true

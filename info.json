@@ -5,5 +5,5 @@
     "author": "fainda and Xman :33",
     "factorio_version": "2.0",
     "dependencies": ["base >= 2.0"],
-    "description": "whatever!"
+    "description": "adds a PLC enviroment to factorio which can be controller via the NYIA-Portal (Not Yet Integrated Automation Portal) !!"
 }

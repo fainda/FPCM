@@ -2,12 +2,10 @@
 --get global vars
 local gv=require("global").vars --global vars
 local gf=require("global").functions --global properties
-local linking_combinator=require("models.linker")
 
 
 
-
-function update_combinators()
+--[[function update_combinators()
     for _, surface in pairs(game.surfaces) do
         --surface loop starts here
         for _, entity in pairs(surface.find_entities_filtered { name = "linking-combinator" }) do
@@ -24,7 +22,7 @@ function update_combinators()
         end
         --surface loop ends here
     end
-end
+end]]--
 
 
 
@@ -33,6 +31,6 @@ local frequency = gv.debug_mode and 240 or 60
 script.on_nth_tick(frequency, function(event) handler(event) end)
 --call everything inside every event
 function handler(event)
-    gf:try_and_catch(update_combinators, "update combinators")
+    storage[gv.mod_name]:update_linkers()
 end
 
