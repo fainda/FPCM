@@ -93,17 +93,17 @@ function add_commands()
             gf:print_to_console("Invalid entity number.")
             return
         end
-        gf:highlight_entity(linker.unit_number, { r = 1, g = 1, b = 0 }, linker.name)
+        gf:highlight_entity(linker.unit_number, gv.highlight, linker.name)
         -- loop through all machines of this linker and highlight them
         for _, network in pairs(linker.networks) do
             if network.type == "output" then
                 for _, machine in pairs(network.machines) do
-                    gf:highlight_entity(machine.unit_number, 1, "[color=red]" .. machine.name .. "[/color]")
+                    gf:highlight_entity(machine.unit_number, 1, gv.rich_red .. machine.name .. "[/color]")
                     gf:draw_to_highlight(linker.position, machine.position, linker.surface)
                 end
             else
                 for _, machine in pairs(network.machines) do
-                    gf:highlight_entity(machine.unit_number, 2, "[color=green]" .. machine.name .. "[/color]")
+                    gf:highlight_entity(machine.unit_number, 2, gv.rich_green .. machine.name .. "[/color]")
                     gf:draw_to_highlight(linker.position, machine.position, linker.surface)
                 end
             end

@@ -6,7 +6,11 @@ local vars = {}
 vars.mod_name = "FPCM"
 vars.debug_mode = true
 vars.verbose = true
-
+vars.red = settings.startup["fpcm_actor"].value
+vars.green = settings.startup["fpcm_sensor"].value
+vars.highlight = settings.startup["fpcm_highlight"].value
+vars.rich_red = "[color=" .. settings.startup["fpcm_actor"].value.r .. "," .. settings.startup["fpcm_actor"].value.g .. "," .. settings.startup["fpcm_actor"].value.b .. "]"
+vars.rich_green = "[color=" .. settings.startup["fpcm_sensor"].value.r .. "," .. settings.startup["fpcm_sensor"].value.g .. "," .. settings.startup["fpcm_sensor"].value.b .. "]"
 
 
 
@@ -73,10 +77,10 @@ function functions:highlight_entity(entity, color, text) -- entity = LuaEntity, 
         entity = game.get_entity_by_unit_number(entity)
     end
     if color == 1 then
-        color = { r = 1, g = 0, b = 0 }
+        color = vars.red
         role = "actor"
     elseif color == 2 then
-        color = { r = 0, g = 1, b = 0 }
+        color = vars.green
         role = "sensor"
     end
     local surface = entity.surface
