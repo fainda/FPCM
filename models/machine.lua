@@ -74,6 +74,7 @@ function machine:set_active(state)
     local entity = game.get_entity_by_unit_number(self.unit_number)
     if entity and entity.active ~= state then
         entity.active = state
+        gf:highlight_entity(entity, 2, "active: " .. tostring(state))
     end
 end
 
