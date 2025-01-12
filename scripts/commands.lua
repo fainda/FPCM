@@ -142,26 +142,21 @@ function add_commands()
         gf:print_to_console("Storage saved to storage_fpcm.json")
     end)
 
-    commands.add_command("fpcm_toggle_machine", "Toggle a machine on or off", function(event)
-        local params = tonumber(event.parameter) -- input example: 123
-        if not params then return end
+    commands.add_command("fpcm_set_active", "Toggle a machine on or off", function(event)
+        local params = helpers.json_to_table(event.parameter) -- input example: {"unit": 123, "active": false}
+        -- check if params are ~= nil
+        if not params or not params.unit or params.active == nil then return end
 
         -- we need to loop through all linkers and their machines and compare the unit number
         for _, linker in pairs(gf:get_root_path()["linker"]) do
             for _, network in pairs(linker.networks) do
                 for _, machine in pairs(network.machines) do
-                    if machine.unit_number == params then
-                        if machine.active == false then
-                            machine.active = true
-                            gf:print_to_console("Machine " .. machine.name .. " turned on.")
-                        else
-                            machine.active = false
-                            gf:print_to_console("Machine " .. machine.name .. " turned off.")
-                        end
+                    if machine.unit_number == params.unit then
+                        machine:set_active(params.active)
+                        return
                     end
                 end
             end
         end
-        gf:print_to_console("No machine with unit number: " .. params .. " found.")
     end)
 end
