@@ -27,3 +27,65 @@ for _, actor_type in ipairs(actors) do
         log("No entities of type " .. actor_type .. " found.")
     end
 end
+
+
+-- make wire colors match the colorblind settings
+data.raw["utility-sprites"].default.green_wire.filename = "__FPCM__/graphics/wire.png"
+data.raw["utility-sprites"].default.green_wire.tint = settings.startup["fpcm_sensor"].value
+data.raw["utility-sprites"].default.red_wire.filename = "__FPCM__/graphics/wire.png"
+data.raw["utility-sprites"].default.red_wire.tint = settings.startup["fpcm_actor"].value
+
+
+
+-- WORKS IN THEORY, but game uses already colored icons, tint just modifies that color (now way to change saturation)
+-- -- icon when item is 'in hand'
+data.raw["item"]["green-wire"].icons = {
+    {
+        icon = "__FPCM__/graphics/icons/new-green-wire-x56.png",
+        icon_size = 56,
+        icon_mipmaps = 2,
+        tint = settings.startup["fpcm_sensor"].value
+    }
+}
+data.raw["item"]["red-wire"].icons = {
+    {
+        icon = "__FPCM__/graphics/icons/new-red-wire-x56.png",
+        icon_size = 56,
+        icon_mipmaps = 2,
+        tint = settings.startup["fpcm_actor"].value
+    }
+}
+
+-- -- custom-input icons for rhs of main quick select bar at bottom of screen
+data.raw["shortcut"]["give-green-wire"].icons = {
+    {
+        icon = "__FPCM__/graphics/icons/new-green-wire-x56.png",
+        icon_size = 56,
+        icon_mipmaps = 2,
+        tint = settings.startup["fpcm_sensor"].value
+    }
+}
+data.raw["shortcut"]["give-green-wire"].small_icons = {
+    {
+        icon = "__FPCM__/graphics/icons/new-green-wire-x24.png",
+        icon_size = 24,
+        icon_mipmaps = 2,
+        tint = settings.startup["fpcm_sensor"].value
+    }
+}
+data.raw["shortcut"]["give-red-wire"].icons = {
+    {
+        icon = "__FPCM__/graphics/icons/new-red-wire-x56.png",
+        icon_size = 56,
+        icon_mipmaps = 2,
+        tint = settings.startup["fpcm_actor"].value
+    }
+}
+data.raw["shortcut"]["give-red-wire"].small_icons = {
+    {
+        icon = "__FPCM__/graphics/icons/new-red-wire-x24.png",
+        icon_size = 24,
+        icon_mipmaps = 2,
+        tint = settings.startup["fpcm_actor"].value
+    }
+}
