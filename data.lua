@@ -8,7 +8,7 @@ require("prototypes.equipment.field-pc-1")
 require("prototypes.equipment.field-pc-2")
 
 
---[[local styles = data.raw["gui-style"].default
+local styles = data.raw["gui-style"].default
 
 styles["test_content_frame"] = {
     type = "frame_style",
@@ -37,5 +37,3 @@ styles["test_deep_frame"] = {
     right_margin = 8,
     bottom_margin = 4
 }
-
-]]--

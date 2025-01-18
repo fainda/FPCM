@@ -197,6 +197,20 @@ function functions:status_int_to_str(status_number)
     return "custom_status"
 end
 
+function functions:create_test_gui(player)
+    if player.gui.screen.test_gui then
+        return
+    end
+
+    player.gui.screen.add{
+        type="frame",
+        name="test_gui",
+        caption="Test GUI",
+        direction="vertical"
+    }
+
+end
+
 --some methods for operating with tables !!
 functions.tables = {}
 function functions.tables:find(f, l) -- find element v of l satisfying f(v)

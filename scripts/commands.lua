@@ -27,6 +27,14 @@ function add_commands()
             storage.FPCM = nil -- WRITE: clear the storage
             player.print("Storage cleared.")
         end)
+        
+        
+    commands.add_command("fpcm_gui", "show gui",
+        function(event)
+            local player = game.get_player(event.player_index)
+            if not player then return end
+            gf:create_test_gui(player)
+        end)
 
     commands.add_command("fpcm_break", "breakpoint for debugging",
         function(event)
