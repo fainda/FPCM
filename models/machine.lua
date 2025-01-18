@@ -75,6 +75,8 @@ function machine:set_active(state)
     if entity and entity.active ~= state then
         entity.active = state
         gf:highlight_entity(entity, 2, "active: " .. tostring(state))
+    else
+        gf:print_to_console("Failed to set active state for " .. self.name)
     end
 end
 

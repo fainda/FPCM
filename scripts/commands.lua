@@ -1,5 +1,6 @@
 local gv = require("global").vars      --global vars
 local gf = require("global").functions --global properties
+local hologram = require("models.hologram")
 
 
 
@@ -145,7 +146,7 @@ function add_commands()
     commands.add_command("fpcm_set_active", "Toggle a machine on or off", function(event)
         local params = helpers.json_to_table(event.parameter) -- input example: {"unit": 123, "active": false}
         -- check if params are ~= nil
-        if not params or not params.unit or params.active == nil then return end
+        if not type(params) == "string" or not params.unit or params.active == nil then return end
 
         -- we need to loop through all linkers and their machines and compare the unit number
         for _, linker in pairs(gf:get_root_path()["linker"]) do
@@ -158,5 +159,24 @@ function add_commands()
                 end
             end
         end
+    end)
+
+    commands.add_command("fpcm_test", "Test command", function(event)
+        local params = tonumber(event.parameter)
+
+        hologram:highlight_sensor(params)
+    end)
+
+    commands.add_command("fpcm_test2", "Test command", function(event)
+        local params = tonumber(event.parameter)
+
+        hologram:highlight_actuator(params)
+    end)
+
+    commands.add_command("fpcm_test3", "Test command", function(event)
+        local params = helpers.json_to_table(event.parameter) -- input example: {"from": 123, "to": 456, "straight": false}
+        if not params or not params.from or not params.to then return end
+
+        hologram:draw_path(params.from, params.to, params.straight)
     end)
 end

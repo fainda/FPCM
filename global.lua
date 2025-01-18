@@ -11,6 +11,13 @@ vars.green = settings.startup["fpcm_sensor"].value
 vars.highlight = settings.startup["fpcm_highlight"].value
 vars.rich_red = "[color=" .. settings.startup["fpcm_actor"].value.r .. "," .. settings.startup["fpcm_actor"].value.g .. "," .. settings.startup["fpcm_actor"].value.b .. "]"
 vars.rich_green = "[color=" .. settings.startup["fpcm_sensor"].value.r .. "," .. settings.startup["fpcm_sensor"].value.g .. "," .. settings.startup["fpcm_sensor"].value.b .. "]"
+vars.hologram_duration = 60 *  settings.startup["fpcm_hologram_duration"].value
+
+local path = {}
+path.sounds = "__FPCM__/sounds/"
+path.graphics = "__FPCM__/graphics/"
+path.prototypes = "__FPCM__/prototypes/"
+path.scripts = "__FPCM__/scripts/"
 
 
 
@@ -85,7 +92,6 @@ function functions:highlight_entity(entity, color, text) -- entity = LuaEntity, 
     end
     local surface = entity.surface
     local bounding_box = entity.bounding_box
-    local duration = 60 * 10 -- 10 seconds
 
     -- Outer glow layer 1
     rendering.draw_rectangle({
@@ -94,7 +100,7 @@ function functions:highlight_entity(entity, color, text) -- entity = LuaEntity, 
         surface = surface,
         left_top = { x = bounding_box.left_top.x - 0.2, y = bounding_box.left_top.y - 0.2 },
         right_bottom = { x = bounding_box.right_bottom.x + 0.2, y = bounding_box.right_bottom.y + 0.2 },
-        time_to_live = duration
+        time_to_live = vars.hologram_duration
     })
 
     -- Outer glow layer 2
@@ -104,7 +110,7 @@ function functions:highlight_entity(entity, color, text) -- entity = LuaEntity, 
         surface = surface,
         left_top = { x = bounding_box.left_top.x - 0.4, y = bounding_box.left_top.y - 0.4 },
         right_bottom = { x = bounding_box.right_bottom.x + 0.4, y = bounding_box.right_bottom.y + 0.4 },
-        time_to_live = duration
+        time_to_live = vars.hologram_duration
     })
     if type(text) == "boolean" and text == true then
         rendering.draw_text({
@@ -114,7 +120,7 @@ function functions:highlight_entity(entity, color, text) -- entity = LuaEntity, 
             alignment = "center",
             color = { r = 1, g = 1, b = 1 }, -- if you want your text to be colored, use "[color=red/green]Your awesome string[/color] (same works with [font])"
             scale = 0.75,
-            time_to_live = duration,
+            time_to_live = vars.hologram_duration,
             use_rich_text = true
         })
     end
@@ -127,7 +133,7 @@ function functions:highlight_entity(entity, color, text) -- entity = LuaEntity, 
             alignment = "center",
             color = { r = 1, g = 1, b = 1 }, -- if you want your text to be colored, use "[color=red/green]Your awesome string[/color] (same works with [font])"
             scale = 0.75,
-            time_to_live = duration,
+            time_to_live = vars.hologram_duration,
             use_rich_text = true
         })
     end
@@ -287,5 +293,6 @@ compatible.common = functions.tables:intersection(compatible.actors, compatible.
 
 globals.functions = functions
 globals.vars = vars
+globals.path = path
 globals.compatible_entities = compatible
 return globals
